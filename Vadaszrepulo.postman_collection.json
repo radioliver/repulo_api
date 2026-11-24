@@ -1,0 +1,472 @@
+{
+  "info": {
+    "name": "Vadászrepülő API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET /repulok",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });",
+              "pm.test(\"Repülők száma\", function () { pm.expect(pm.response.json().length).to.eql(15); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. GET /repulok?generacio=5",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok?generacio=5"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });",
+              "pm.test(\"Repülők száma\", function () { pm.expect(pm.response.json().length).to.eql(4); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. GET /repulok?generacio=4.5",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok?generacio=4.5"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });",
+              "pm.test(\"Repülők száma\", function () { pm.expect(pm.response.json().length).to.eql(3); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. GET /repulok?generacio=6",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok?generacio=6"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. GET /repulok/10",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok/10"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });",
+              "pm.test(\"Gripen\", function () { pm.expect(pm.response.json().nev).to.eql(\"JAS 39 Gripen\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. GET /repulok/abc",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok/abc"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. GET /repulok/99",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok/99"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. POST /repulok",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{host}}/repulok",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nev\": \"F/A-18 Hornet\",\n  \"gyarto\": \"McDonnell Douglas\",\n  \"orszag\": \"Egyesült Államok\",\n  \"elsoRepules\": 1978,\n  \"maxSebesseg\": 1910,\n  \"generacio\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. POST /repulok",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Api-Kulcs",
+            "value": "utanegeto"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{host}}/repulok",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nev\": \"F/A-18 Hornet\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. POST /repulok",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{host}}/repulok",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nev\": \"F/A-18 Hornet\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. POST /repulok",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Api-Kulcs",
+            "value": "utanegeto"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{host}}/repulok",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nev\": \"F/A-18 Hornet\",\n  \"gyarto\": \"McDonnell Douglas\",\n  \"orszag\": \"Egyesült Államok\",\n  \"elsoRepules\": 1978,\n  \"maxSebesseg\": 1910,\n  \"generacio\": 6\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "12. POST /repulok",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Api-Kulcs",
+            "value": "utanegeto"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{host}}/repulok",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nev\": \"F/A-18 Hornet\",\n  \"gyarto\": \"McDonnell Douglas\",\n  \"orszag\": \"Egyesült Államok\",\n  \"elsoRepules\": 1978,\n  \"maxSebesseg\": 1910,\n  \"generacio\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });",
+              "pm.test(\"Új ID\", function () { pm.expect(pm.response.json().id).to.eql(16); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "13. DELETE /repulok/16",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{host}}/repulok/16"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14. DELETE /repulok/abc",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{host}}/repulok/abc"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 401\", function () { pm.response.to.have.status(401); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "15. DELETE /repulok/abc",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-Api-Kulcs",
+            "value": "utanegeto"
+          }
+        ],
+        "url": "{{host}}/repulok/abc"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "16. DELETE /repulok/99",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-Api-Kulcs",
+            "value": "utanegeto"
+          }
+        ],
+        "url": "{{host}}/repulok/99"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "17. DELETE /repulok/16",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-Api-Kulcs",
+            "value": "utanegeto"
+          }
+        ],
+        "url": "{{host}}/repulok/16"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 204\", function () { pm.response.to.have.status(204); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });",
+              "pm.test(\"Üres törzs\", function () { pm.expect(pm.response.text()).to.eql(\"\"); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "18. GET /repulok",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{host}}/repulok"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"X-Api fejléc\", function () { pm.expect(pm.response.headers.get(\"X-Api\")).to.eql(\"vadaszrepulok\"); });",
+              "pm.test(\"Repülők száma\", function () { pm.expect(pm.response.json().length).to.eql(15); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
