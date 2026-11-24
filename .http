@@ -1,0 +1,101 @@
+@host = http://localhost:3000/api
+
+### 1. Várt: 200
+GET {{host}}/repulok
+
+### 2. Várt: 200
+GET {{host}}/repulok?generacio=5
+
+### 3. Várt: 200
+GET {{host}}/repulok?generacio=4.5
+
+### 4. Várt: 400
+GET {{host}}/repulok?generacio=6
+
+### 5. Várt: 200
+GET {{host}}/repulok/10
+
+### 6. Várt: 400
+GET {{host}}/repulok/abc
+
+### 7. Várt: 404
+GET {{host}}/repulok/99
+
+### 8. Várt: 401
+POST {{host}}/repulok
+Content-Type: application/json
+
+{
+  "nev": "F/A-18 Hornet",
+  "gyarto": "McDonnell Douglas",
+  "orszag": "Egyesült Államok",
+  "elsoRepules": 1978,
+  "maxSebesseg": 1910,
+  "generacio": 4
+}
+
+### 9. Várt: 400
+POST {{host}}/repulok
+X-Api-Kulcs: utanegeto
+Content-Type: application/json
+
+{
+  "nev": "F/A-18 Hornet"
+}
+
+### 10. Várt: 401
+POST {{host}}/repulok
+Content-Type: application/json
+
+{
+  "nev": "F/A-18 Hornet"
+}
+
+### 11. Várt: 400
+POST {{host}}/repulok
+X-Api-Kulcs: utanegeto
+Content-Type: application/json
+
+{
+  "nev": "F/A-18 Hornet",
+  "gyarto": "McDonnell Douglas",
+  "orszag": "Egyesült Államok",
+  "elsoRepules": 1978,
+  "maxSebesseg": 1910,
+  "generacio": 6
+}
+
+### 12. Várt: 201
+POST {{host}}/repulok
+X-Api-Kulcs: utanegeto
+Content-Type: application/json
+
+{
+  "nev": "F/A-18 Hornet",
+  "gyarto": "McDonnell Douglas",
+  "orszag": "Egyesült Államok",
+  "elsoRepules": 1978,
+  "maxSebesseg": 1910,
+  "generacio": 4
+}
+
+### 13. Várt: 401
+DELETE {{host}}/repulok/16
+
+### 14. Várt: 401
+DELETE {{host}}/repulok/abc
+
+### 15. Várt: 400
+DELETE {{host}}/repulok/abc
+X-Api-Kulcs: utanegeto
+
+### 16. Várt: 404
+DELETE {{host}}/repulok/99
+X-Api-Kulcs: utanegeto
+
+### 17. Várt: 204
+DELETE {{host}}/repulok/16
+X-Api-Kulcs: utanegeto
+
+### 18. Várt: 200
+GET {{host}}/repulok
